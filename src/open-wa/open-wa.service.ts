@@ -5,17 +5,17 @@ import { create, Client, NotificationLanguage } from '@open-wa/wa-automate';
 export class OpenWASession {
   private client: Client;
 
-  async startSession() {
+  async startSession(sessionId: string): Promise<void> {
     try {
       this.client = await create({
-        sessionId: 'session',
+        sessionId: sessionId,
         multiDevice: true,
         authTimeout: 0,
         blockCrashLogs: true,
         disableSpins: true,
         headless: false,
         hostNotificationLang: NotificationLanguage.PTBR,
-        logConsole: true,
+        logConsole: false,
         qrLogSkip: false,
         autoRefresh: true,
         popup: 8000,

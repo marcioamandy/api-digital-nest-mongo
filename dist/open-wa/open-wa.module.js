@@ -10,11 +10,13 @@ exports.OpenWAModule = void 0;
 const common_1 = require("@nestjs/common");
 const open_wa_service_1 = require("./open-wa.service");
 const open_wa_controller_1 = require("./open-wa.controller");
+const auth_module_1 = require("../auth/auth.module");
 let OpenWAModule = class OpenWAModule {
 };
 exports.OpenWAModule = OpenWAModule;
 exports.OpenWAModule = OpenWAModule = __decorate([
     (0, common_1.Module)({
+        imports: [(0, common_1.forwardRef)(() => auth_module_1.AuthModule)],
         controllers: [open_wa_controller_1.OpenWAController],
         providers: [open_wa_service_1.OpenWASession],
         exports: [open_wa_service_1.OpenWASession],

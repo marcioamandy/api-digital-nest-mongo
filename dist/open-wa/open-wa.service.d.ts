@@ -1,4 +1,4 @@
 export declare class OpenWASession {
     private client;
-    startSession(): Promise<void>;
+    startSession(sessionId: string): Promise<void>;
 }

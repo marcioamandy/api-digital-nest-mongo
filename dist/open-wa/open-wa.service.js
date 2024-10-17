@@ -10,17 +10,17 @@ exports.OpenWASession = void 0;
 const common_1 = require("@nestjs/common");
 const wa_automate_1 = require("@open-wa/wa-automate");
 let OpenWASession = class OpenWASession {
-    async startSession() {
+    async startSession(sessionId) {
         try {
             this.client = await (0, wa_automate_1.create)({
-                sessionId: 'session',
+                sessionId: sessionId,
                 multiDevice: true,
                 authTimeout: 0,
                 blockCrashLogs: true,
                 disableSpins: true,
                 headless: false,
                 hostNotificationLang: wa_automate_1.NotificationLanguage.PTBR,
-                logConsole: true,
+                logConsole: false,
                 qrLogSkip: false,
                 autoRefresh: true,
                 popup: 8000,

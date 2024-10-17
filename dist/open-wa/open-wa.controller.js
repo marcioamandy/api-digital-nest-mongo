@@ -16,11 +16,13 @@ exports.OpenWAController = void 0;
 const common_1 = require("@nestjs/common");
 const open_wa_service_1 = require("./open-wa.service");
 const wa_automate_1 = require("@open-wa/wa-automate");
+const roles_decorator_1 = require("../auth/jwt/roles.decorator");
+const role_guard_1 = require("../auth/jwt/role.guard");
 let OpenWAController = class OpenWAController {
     constructor(openWASession) {
         this.openWASession = openWASession;
     }
-    async getQRCode(res) {
+    async getQRCode(res, req) {
         try {
             wa_automate_1.ev.on('qr.**', async (image) => {
                 const imageData = image.split(',')[1];
@@ -28,7 +30,7 @@ let OpenWAController = class OpenWAController {
                 res.setHeader('Content-Type', 'image/png');
                 res.send(imageBuffer);
             });
-            await this.openWASession.startSession();
+            await this.openWASession.startSession(req.user.id);
         }
         catch (err) {
             console.error('Erro ao iniciar a sessão Open-WA:', err);
@@ -38,10 +40,13 @@ let OpenWAController = class OpenWAController {
 };
 exports.OpenWAController = OpenWAController;
 __decorate([
+    (0, common_1.UseGuards)(role_guard_1.RoleGuard),
+    (0, roles_decorator_1.Roles)('default'),
     (0, common_1.Get)(),
     __param(0, (0, common_1.Res)()),
+    __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", Promise)
 ], OpenWAController.prototype, "getQRCode", null);
 exports.OpenWAController = OpenWAController = __decorate([
